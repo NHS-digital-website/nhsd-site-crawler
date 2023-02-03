@@ -44,7 +44,7 @@ Note: There is no depth limit so this scraper can get stuck in loops on pages wh
 
 ### Usage
 
-`scrapy crawl nhsd-sitemap-generator`
+`scrapy crawl nhsd-content-compare`
 
 
 ## Code Overview
