@@ -5,6 +5,8 @@
 
 
 # useful for handling different item types with a single interface
+import os
+
 from itemadapter import ItemAdapter
 from scrapy.exporters import CsvItemExporter
 from .items import NhsdItem
@@ -17,7 +19,9 @@ class NhsdPipeline:
         return item
 
 class CsvExportPipeline(object):
-    def __init__(self):        
+    def __init__(self):
+        if not os.path.exists('results'):
+            os.makedirs('results')
         file = open('results/pages.csv', 'wb')
         self.exporter = CsvItemExporter(file, str)
         self.exporter.fields_to_export = ['page_title', 'match', 'url', 'alt_url']

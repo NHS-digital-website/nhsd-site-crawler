@@ -22,8 +22,22 @@ class NhsdSitemapSpider(scrapy.spiders.CrawlSpider):
         yield self.parse(response)
 
         for link in LinkExtractor(
-            deny=(['^.*\.digital\.nhs\.uk/', 'digital\.nhs\.uk/ndrs/search/.*']),
-            allow_domains=(['digital.nhs.uk'])
+            deny=([
+                '/binaries/.*',
+                '/search/.*',
+                '/cyber-alerts/.*(?:.*(?:threat_type|year|severity|month).+)',
+                '/developer/.*(?:filter=).*',
+                '/services/service-catalogue/.*(?:filter=).*',
+                r'/news/feed/year/\d{4}.*',
+                '/news-and-events/.*(?:year|month).*',
+                '/news/events/.*(?:type=).*',
+                '/ndrs/.*',
+                '/error/.*'
+            ]),
+            allow_domains=([
+                'digital.nhs.uk',
+                'files.digital.nhs.uk'
+            ])
         ).extract_links(response):
             parsedUrl = urlparse(link.url)
             parsedUrlString = parsedUrl._replace(query='', fragment='').geturl()
